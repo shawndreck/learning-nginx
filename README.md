@@ -59,3 +59,11 @@ If you need to clear the cache, the easiest way is with the command:
 ```find /var/www/example.com/cache/ -type f -delete```
 
 If you want more than just a basic cache clear, you can use the proxy_cache_purge directive.
+
+## Disable content sniffing
+Add the following to either http block in nginx.conf to disable content sniffing.
+
+    add_header X-Content-Type-Options nosniff;
+
+Content sniffing allows browsers to inspect a byte stream in order to determine the file format of its contents. It is generally used to help sites that do not correctly identify the MIME type of their content, but it also presents a vector for cross-site scripting and other attacks.
+
