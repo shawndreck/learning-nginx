@@ -1,4 +1,7 @@
 # Personal notes on learning to use NGINX
+
+Reference: https://www.linode.com/docs/web-servers/nginx/slightly-more-advanced-configurations-for-nginx/
+
 With some experience of Apache but wishing to switch to NGINX,
 I decided to take a renewed look at NGINX to demystify it for my own
 use. 
@@ -81,3 +84,8 @@ To disallow embedding entirely, even from within your own site’s domain:
 
     add_header X-Frame-Options DENY;
 
+Cross-Site Scripting (XSS) FilterPermalink
+
+This header signals to a connecting browser to enable its cross-site scripting filter for the request responses. XSS filtering is usually enabled by default in modern browsers, but there are occasions where it’s disabled by the user. Forcing XSS filtering for your website is a security precaution, especially when your site offers dynamic content like login sessions:
+
+    add_header X-XSS-Protection "1; mode=block";
