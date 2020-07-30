@@ -159,3 +159,9 @@ use `openssl version` to check with openssl version you have installed.
 To enable http/2, add the following to your server block for 443 port
     listen    443 ssl http2;
     listen    [::]:443 ssl http2;
+
+### OCSP Stapling
+Its a way for server to make request to check on ssl certificate's revocation status,
+on behalf of the browser. The response is added to that which is returned to the browser.
+This means that browsers do not have to do that step. In effect performance is boosted
+More info: https://en.wikipedia.org/wiki/OCSP_stapling
