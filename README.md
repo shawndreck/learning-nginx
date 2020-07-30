@@ -67,3 +67,17 @@ Add the following to either http block in nginx.conf to disable content sniffing
 
 Content sniffing allows browsers to inspect a byte stream in order to determine the file format of its contents. It is generally used to help sites that do not correctly identify the MIME type of their content, but it also presents a vector for cross-site scripting and other attacks.
 
+
+## Limit or Disable Content Embedding
+
+Content embedding is when a website renders a 3rd party element (div, img, etc.), or even an entire page from a completely different website, in a <frame>, <iframe>, or <object> HTML block on its own site. 
+The X-Frame-Options HTTP header stops content embedding so your site can’t be presented from an embedded frame hosted on someone else’s website, one undesirable outcome being a clickjacking attack
+
+To disallow the embedding of your content from any domain other than your own, add the following line to your configuration:
+
+    add_header X-Frame-Options SAMEORIGIN;
+
+To disallow embedding entirely, even from within your own site’s domain:
+
+    add_header X-Frame-Options DENY;
+
