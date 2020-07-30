@@ -3,7 +3,10 @@ version: "3.7"
 services:
   nginx:
     container_name: nginx-container
-    image: nginx:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: my-nginx-image
     volumes:
       - ./:/var/www/example.com
       - ./my-nginx.conf:/etc/nginx/conf/nginx.conf
