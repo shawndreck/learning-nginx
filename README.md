@@ -150,3 +150,12 @@ SSL/TLS handshakes use a non-negligible amount of CPU power, so minimizing the a
 ### Increase TLS Session Duration
 
 Maintain a connected client’s SSL/TLS session for 10 minutes before needing to re-negotiate the connection. Add these to the rest of your ssl_ directives, either in http in main configuration or server block in per domain config
+
+### Enable HTTP/2
+Browsers only support this over https
+Requires openssl version 1.0.2+
+use `openssl version` to check with openssl version you have installed.
+
+To enable http/2, add the following to your server block for 443 port
+    listen    443 ssl http2;
+    listen    [::]:443 ssl http2;
