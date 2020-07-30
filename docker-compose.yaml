@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  nginx:
+    container_name: nginx-container
+    image: nginx:latest
+    volumes:
+      - ./:/var/www/example.com
+      - ./my-nginx.conf:/etc/nginx/conf/nginx.conf
+      - ./example.com.conf:/etc/nginx/conf.d/example.com.conf
+    ports:
+      - 8080:80
+    restart: always
