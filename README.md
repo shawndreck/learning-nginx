@@ -116,3 +116,37 @@ This header signals to a connecting browser to enable its cross-site scripting f
 
 NOTE:
 These alone will not redirect http to https!
+
+## Redirecting All HTTP to HTTPS
+add a server block with a return statement to redirect port 80 requests to 
+port 443
+    server{
+        listen 80;
+        listen [::]:80;
+        server_name example.com;
+        return 301 https://example.com$request_uri;
+    }
+
+    server{
+        listen 443 ssl default_server;
+        ....
+    }
+
+
+## Strenthening SSL configurations
+
+### Enforce Server-Side Cipher Suite Preferences
+
+Web browsers support many OpenSSL cipher suites, some of which are inefficient or weak. NGINX can impose its TLS cipher suite choices over those of a connecting browser, provided the browser supports them.
+
+Add this to the rest of your ssl_ directives, be they in the `http` of `/etc/nginx/nginx.conf`, or an HTTPS site’s `server` block:`
+    
+	ssl_prefer_server_ciphers on;
+
+### Increase Keepalive Duration
+
+SSL/TLS handshakes use a non-negligible amount of CPU power, so minimizing the amount of handshakes which connecting clients need to perform will reduce your system’s processor use. One way to do this is by increasing the duration of keepalive connections from 60 to 75 seconds. This is safe for HTTP and HTTPS, so can be added to the `http` block of `/etc/nginx/nginx.conf` or edited if already present.
+
+### Increase TLS Session Duration
+
+Maintain a connected client’s SSL/TLS session for 10 minutes before needing to re-negotiate the connection. Add these to the rest of your ssl_ directives, either in http in main configuration or server block in per domain config
