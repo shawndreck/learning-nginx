@@ -12,6 +12,14 @@ RUN mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.disabled
 
 # Creating directory for use as cache
 # make sure to add proper configs to use this folder as cache storage
-RUN mkdir -p /var/www/nginx-cache
+RUN mkdir -p /var/www/nginx-cache \
+    mkdir -p /root/certs/example.com
+
+
+# Copy Certificate/Key pair for use on https
+# This is a serlf signed and only good for personal use
+COPY MyCertificate.crt /root/certs/example.com/
+COPY MyKey.key /root/certs/example.com/
+
 
 

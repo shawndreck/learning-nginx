@@ -89,3 +89,30 @@ Cross-Site Scripting (XSS) FilterPermalink
 This header signals to a connecting browser to enable its cross-site scripting filter for the request responses. XSS filtering is usually enabled by default in modern browsers, but there are occasions where it’s disabled by the user. Forcing XSS filtering for your website is a security precaution, especially when your site offers dynamic content like login sessions:
 
     add_header X-XSS-Protection "1; mode=block";
+
+
+## Adding SSL support
+
+1. Enable/Open ports in server block
+2. Create a self signed ssl if none available, using openssl
+3. Move the Cert/key pair to a secure location. Example /root/certs/example.com/
+4. Set ssl related configurations in http block in the main configuration file
+    http{
+        ...
+        # Set up default SSL TLS configurations
+        # Individual configs will be placed in the server blocks respective conf files
+        ssl_ciphers EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH;
+        ssl_protocols   TLSv1 TLSv1.1 TLSv1.2;
+        ssl_session_cache shared:SSL:10m;
+        ssl_session_timeout 10m; 
+    }
+5. Set ssl cert/key pair in server block
+
+    #File: /etc/nginx/conf.d/example.com.conf
+    
+    #Add certificate/key pair
+    ssl_certificate /root/certs/example.com/MyCertificate.crt;
+    ssl_certificate_key /root/certs/example.com/MyKey.key;
+
+NOTE:
+These alone will not redirect http to https!
